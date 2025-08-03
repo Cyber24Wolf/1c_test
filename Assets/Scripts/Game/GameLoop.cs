@@ -11,7 +11,7 @@ public class GameLoop : IGame
 
     public GameLoop(EventBus eventBus)
     {
-        _eventBus    = eventBus;
+        _eventBus = eventBus;
 
         _stateMachine = new GameplayStateMachine();
         Initialize();
