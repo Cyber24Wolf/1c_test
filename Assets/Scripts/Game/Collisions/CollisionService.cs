@@ -30,29 +30,26 @@ public class CollisionService : ICollisionService, ITickable, IDisposable
             for (int j = i + 1; j < _colliders.Count; j++)
             {
                 var b = _colliders[j];
-                if (a.Intersects(b))
-                {
-                    var pair = new ColliderPair(a, b);
-                    _currentCollisions.Add(pair);
+                if (!a.Intersects(b))
+                    continue;
+                var pair = new ColliderPair(a, b);
+                _currentCollisions.Add(pair);
 
-                    if (_previousCollisions.Contains(pair))
-                        if (a.CallStayEvent && b.CallStayEvent)
-                            _eventBus.Publish(new GameEvent_CollisionStay(a, b));
-                    else
-                        _eventBus.Publish(new GameEvent_CollisionEnter(a, b));
-                }
+                if (_previousCollisions.Contains(pair))
+                    if (a.CallStayEvent && b.CallStayEvent)
+                        _eventBus.Publish(new GameEvent_CollisionStay(a, b));
+                else
+                    _eventBus.Publish(new GameEvent_CollisionEnter(a, b));
             }
         }
 
         foreach (var pair in _previousCollisions)
         {
-            if (!_currentCollisions.Contains(pair))
-            {
-                _eventBus.Publish(new GameEvent_CollisionExit(pair.A, pair.B));
-            }
+            if (_currentCollisions.Contains(pair))
+                continue;
+            _eventBus.Publish(new GameEvent_CollisionExit(pair.A, pair.B));
         }
 
-        // swap sets (or copy current into previous)
         (_previousCollisions, _currentCollisions) = (_currentCollisions, _previousCollisions);
     }
 
