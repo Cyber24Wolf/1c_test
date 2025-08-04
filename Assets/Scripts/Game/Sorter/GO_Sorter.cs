@@ -5,7 +5,9 @@ using Zenject;
 public class GO_Sorter : MonoBehaviour
 {
     [SerializeField] float _distanceBetweenSlots = 1.5f;
-    [SerializeField] Transform _background;
+    [SerializeField] Vector2 _backgroundPadding = Vector2.one;
+    [SerializeField] float _backgroundHeight = 0.5f;
+    [SerializeField] SpriteRenderer _background;
 
     private EventBus            _eventBus;
     private ISorterSlotFactory  _sorterSlotFactory;
@@ -30,7 +32,6 @@ public class GO_Sorter : MonoBehaviour
                 _sorterSlotFactory.Spawn(request.Figures[i])
             );
         UpdateSlotsPositions();
-        Debug.Log($"Sorter slots created: {_slots.Count}");
     }
 
     private void UpdateSlotsPositions()
@@ -47,15 +48,20 @@ public class GO_Sorter : MonoBehaviour
             _slots[i].transform.position = pos;
         }
 
-        ResizeBackground(_background, _slots.Count, _distanceBetweenSlots);
+        ResizeBackground(_slots.Count);
     }
 
-    private void ResizeBackground(Transform background, int count, float spacing, float padding = 1f)
+    private void ResizeBackground(int count)
     {
-        var width = (count - 1) * spacing + padding * 2;
-        var height = padding;
-        background.localScale = new Vector3(width, height, background.localScale.z);
-        background.position = transform.position;
+        var width = (count - 1) * _distanceBetweenSlots + _backgroundPadding.x * 2;
+        var height = _backgroundHeight + _backgroundPadding.y * 2;
+        _background.size = new Vector3(width, height);
+        _background.transform.position = transform.position;
+    }
+
+    private void OnValidate()
+    {
+        UpdateSlotsPositions();
     }
 
     private void OnDestroy()
