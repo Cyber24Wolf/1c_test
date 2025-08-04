@@ -4,6 +4,7 @@ using Zenject;
 public class GO_LightCollider : MonoBehaviour
 {
     [SerializeField] private float _radius = 0.5f;
+    [SerializeField] private bool  _callStayEvent = false;
 
 #if UNITY_EDITOR
     [Header("Editor")]
@@ -14,6 +15,7 @@ public class GO_LightCollider : MonoBehaviour
 
     public Vector2 Center            => transform.position;
     public float   Radius            => _radius;
+    public bool    CallStayEvent     => _callStayEvent;
 
     [Inject]
     private void Setup(ICollisionService collisionService) 

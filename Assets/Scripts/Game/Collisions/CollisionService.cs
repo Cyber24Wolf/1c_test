@@ -36,7 +36,8 @@ public class CollisionService : ICollisionService, ITickable, IDisposable
                     _currentCollisions.Add(pair);
 
                     if (_previousCollisions.Contains(pair))
-                        _eventBus.Publish(new GameEvent_CollisionStay(a, b));
+                        if (a.CallStayEvent && b.CallStayEvent)
+                            _eventBus.Publish(new GameEvent_CollisionStay(a, b));
                     else
                         _eventBus.Publish(new GameEvent_CollisionEnter(a, b));
                 }
