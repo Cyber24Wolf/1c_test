@@ -183,9 +183,9 @@ MonoBehaviour:
   _showDuration_bg: 0.2
   _showDuration_header: 0.15
   _showDuration_startButton: 0.15
-  _hideDuration_bg: 0.5
-  _hideDuration_header: 0.5
-  _hideDuration_startButton: 0.5
+  _hideDuration_bg: 0.2
+  _hideDuration_header: 0.15
+  _hideDuration_startButton: 0.15
 --- !u!1 &4078668963071018062
 GameObject:
   m_ObjectHideFlags: 0
