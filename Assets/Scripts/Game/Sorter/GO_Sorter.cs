@@ -66,9 +66,4 @@ public class GO_Sorter : MonoBehaviour
         _slots.Clear();
         _eventBus.Unsubscribe<GameEvent_SpawnSorterSlotsRequest>(OnSpawnRequest);
     }
-
-    private void OnValidate()
-    {
-        UpdateSlotsPositions();
-    }
 }
