@@ -71,12 +71,12 @@ public class Animator_PauseGameView : MonoBehaviour, IAnimator_PauseGameView
         {
             await LSequence
                 .Create()
-                .Append(LMotion.Create(1f, 0f, _showDuration_bg).BindToLocalScaleX(_leftBg))
-                .Join(LMotion.Create(1f, 0f, _showDuration_bg).WithEase(Ease.InSine).BindToLocalScaleX(_rightBg))
-                .Append(LMotion.Create(1f, 0f, _showDuration_header).BindToLocalScaleX(_header))
-                .Join(LMotion.Create(1f, 0f, _showDuration_header).BindToLocalScaleY(_header))
-                .Join(LMotion.Create(1f, 0f, _showDuration_startButton).BindToLocalScaleX(_startButtonRoot))
-                .Join(LMotion.Create(1f, 0f, _showDuration_startButton).BindToLocalScaleY(_startButtonRoot))
+                .Append(LMotion.Create(1f, 0f, _hideDuration_bg).BindToLocalScaleX(_leftBg))
+                .Join(LMotion.Create(1f, 0f, _hideDuration_bg).WithEase(Ease.InSine).BindToLocalScaleX(_rightBg))
+                .Append(LMotion.Create(1f, 0f, _hideDuration_header).BindToLocalScaleX(_header))
+                .Join(LMotion.Create(1f, 0f, _hideDuration_header).BindToLocalScaleY(_header))
+                .Join(LMotion.Create(1f, 0f, _hideDuration_startButton).BindToLocalScaleX(_startButtonRoot))
+                .Join(LMotion.Create(1f, 0f, _hideDuration_startButton).BindToLocalScaleY(_startButtonRoot))
                 .Run()
                 .ToAwaitable(token);
         }
