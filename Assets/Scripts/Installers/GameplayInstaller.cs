@@ -17,5 +17,17 @@ public class GameplayInstaller : MonoInstaller
             .To<Game>()
             .AsSingle()
             .NonLazy();
+
+        Container
+            .Bind<IDamageDealerService>()
+            .To<DamageDealerService>()
+            .AsSingle()
+            .NonLazy();
+
+        Container
+            .Bind<IFiguresDestroyer>()
+            .To<FiguresDestroyer>()
+            .AsSingle()
+            .NonLazy();
     }
 }

@@ -9,7 +9,9 @@ public class Game : IGame
     private readonly GameplayStateMachine _stateMachine;
     private readonly EventBus _eventBus;
 
-    public Game(EventBus eventBus, IGameplayConfig gameplayConfig)
+    public Game(
+        EventBus eventBus,
+        IGameplayConfig gameplayConfig)
     {
         _eventBus = eventBus;
 

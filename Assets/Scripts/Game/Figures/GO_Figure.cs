@@ -8,8 +8,9 @@ public class GO_Figure : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _renderer;
 
-    private CompositeDisposable _disposables = new CompositeDisposable();
+    private CompositeDisposable _disposables    = new CompositeDisposable();
     private IAnimator_GO_Figure _animator;
+    private Action<GO_Figure>   _onHideComplete = null;
 
     public ViewModel Model { get; private set; } = new();
 
@@ -84,10 +85,16 @@ public class GO_Figure : MonoBehaviour
         if (_animator == null)
             return;
 
+        _onHideComplete = input.OnHideComplete;
         if (input.Explode)
-            _animator.ExplodeAnimation(input.OnHideComplete);
+            _animator.ExplodeAnimation(OnHideComplete);
         else 
-            _animator.HideAnimation(input.OnHideComplete);
+            _animator.HideAnimation(OnHideComplete);
+    }
+
+    private void OnHideComplete()
+    {
+        _onHideComplete?.Invoke(this);
     }
 
     public class ViewModel
@@ -101,10 +108,10 @@ public class GO_Figure : MonoBehaviour
 
     public readonly struct HideInput
     {
-        public bool   Explode { get; }
-        public Action OnHideComplete  { get; }
+        public bool              Explode        { get; }
+        public Action<GO_Figure> OnHideComplete { get; }
 
-        public HideInput(bool explode, Action onHide)
+        public HideInput(bool explode, Action<GO_Figure> onHide)
         {
             Explode        = explode;
             OnHideComplete = onHide;
