@@ -1,37 +1,28 @@
-﻿public interface IGame
+﻿using UnityEngine;
+
+public interface IGame
 {
-    public void Start();
-    public void Restart();
 }
 
-public class GameLoop : IGame
+public class Game : IGame
 {
     private readonly GameplayStateMachine _stateMachine;
     private readonly EventBus _eventBus;
 
-    public GameLoop(EventBus eventBus)
+    public Game(EventBus eventBus, IGameplayConfig gameplayConfig)
     {
         _eventBus = eventBus;
 
         _stateMachine = new GameplayStateMachine();
-        Initialize();
-    }
-
-    private void Initialize()
-    {
         _stateMachine.Register(new GameplayState_Idle());
-        _stateMachine.Register(new GameplayState_Playing());
+        _stateMachine.Register(new GameplayState_Playing(_eventBus, gameplayConfig));
         _stateMachine.Register(new GameplayState_Win());
         _stateMachine.Register(new GameplayState_Loose());
 
         _eventBus.Subscribe<GameEvent_LifesChanged>(OnLifesChanged);
+        _eventBus.Subscribe<GameEvent_StartGameRequest>(OnGameStartEvent);
 
         _stateMachine.ChangeState<GameplayState_Idle>();
-    }
-
-    public void Start()
-    {
-        _stateMachine.ChangeState<GameplayState_Playing>();
     }
 
     private void OnLifesChanged(GameEvent_LifesChanged e)
@@ -40,13 +31,18 @@ public class GameLoop : IGame
             Loose();
     }
 
-    public void Restart()
+    private void OnGameStartEvent(GameEvent_StartGameRequest evt) 
     {
-        _stateMachine.ChangeState<GameplayState_Idle>();
+        _stateMachine.ChangeState<GameplayState_Playing>();
     }
 
     private void Loose()
     {
         _stateMachine.ChangeState<GameplayState_Loose>();
+    }
+
+    private void Win()
+    {
+        _stateMachine.ChangeState<GameplayState_Win>();
     }
 }

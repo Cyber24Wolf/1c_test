@@ -1,20 +1,23 @@
 ﻿using Cysharp.Threading.Tasks;
 using LitMotion;
-using LitMotion.Animation;
 using R3;
 using System;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class GO_Figure : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer     _renderer;
-    [SerializeField] private LitMotionAnimation _showAnimation;
-    [SerializeField] private LitMotionAnimation _hideAnimation;
-    [SerializeField] private LitMotionAnimation _explodeAnimation;
 
     private CompositeDisposable _disposables = new CompositeDisposable();
+    private IAnimator_GO_Figure _animator;
 
     public ViewModel Model { get; private set; } = new();
+
+    private void Awake()
+    {
+        _animator = GetComponent<IAnimator_GO_Figure>();
+    }
 
     private void OnEnable()
     {
@@ -42,6 +45,15 @@ public class GO_Figure : MonoBehaviour
 
     private void ProceedVelocity(float dt)
     {
+        if (dt <= 0f)
+            return;
+
+        if (Model == null)
+            return;
+
+        if (Model.ManualControl.Value == true)
+            return;
+
         var velocity = Model.Velocity.Value;
         if (velocity == Vector2.zero)
             return;
@@ -57,33 +69,35 @@ public class GO_Figure : MonoBehaviour
             return;
         }
         _renderer.sprite = figureData.sprite;
+        _animator.ShowAnimation(null);
     }
 
     private void OnShowCommand(ShowInput input)
     {
-        LitMotionAnimationHandler
-            .PlayAsync(_hideAnimation, input.OnShowComplete)
-            .Forget();
+        if (_animator == null)
+            return;
+
+        _animator.ShowAnimation(input.OnShowComplete);
     }
 
     private void OnHideCommand(HideInput input)
     {
+        if (_animator == null)
+            return;
+
         if (input.Explode)
-            LitMotionAnimationHandler
-                .PlayAsync(_explodeAnimation, input.OnHideComplete)
-                .Forget();
+            _animator.ExplodeAnimation(input.OnHideComplete);
         else 
-            LitMotionAnimationHandler
-                .PlayAsync(_hideAnimation, input.OnHideComplete)
-                .Forget();
+            _animator.HideAnimation(input.OnHideComplete);
     }
 
     public class ViewModel
     {
-        public ReactiveProperty<DO_Figure> FigureData  { get; private set; } = new();
-        public ReactiveProperty<Vector2>   Velocity    { get; private set; } = new();
-        public ReactiveCommand<HideInput>  HideCommand { get; private set; } = new();
-        public ReactiveCommand<ShowInput>  ShowCommand { get; private set; } = new();
+        public ReactiveProperty<DO_Figure> FigureData    { get; private set; } = new();
+        public ReactiveProperty<bool>      ManualControl { get; private set; } = new();
+        public ReactiveProperty<Vector2>   Velocity      { get; private set; } = new();
+        public ReactiveCommand<HideInput>  HideCommand   { get; private set; } = new();
+        public ReactiveCommand<ShowInput>  ShowCommand   { get; private set; } = new();
     }
 
     public readonly struct HideInput

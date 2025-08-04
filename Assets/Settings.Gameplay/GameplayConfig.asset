@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e628cfa5cb7fc048a4694c855276839, type: 3}
+  m_Name: GameplayConfig
+  m_EditorClassIdentifier: 
+  initialLifes: 100
+  lifesPerFigure: 1
+  scoresPerFigure: 1
+  figuresCount: 350
+  figureTypes:
+  - {fileID: 11400000, guid: 69e6cfecca6bd9e4d8dece002c4ecd85, type: 2}
+  - {fileID: 11400000, guid: f46c2a5c58df73743ac26e6e53f5f8ef, type: 2}
+  - {fileID: 11400000, guid: c1ec0800a44e22e4080ecc801923d928, type: 2}
+  - {fileID: 11400000, guid: 982a7bffd5e5b8d4abdab071a9101620, type: 2}
+  figuresVelocityMin: {x: 1, y: 0}
+  figuresVelocityMax: {x: 2, y: 0}
+  figuresSpawnTimeMin: 2
+  figuresSpawnTimeMax: 5
