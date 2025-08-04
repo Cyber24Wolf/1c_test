@@ -3,7 +3,6 @@ using LitMotion;
 using R3;
 using System;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class GO_Figure : MonoBehaviour
 {

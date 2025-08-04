@@ -29,4 +29,9 @@ public class FigurePool : MonoMemoryPool<DO_Figure, Vector3, Vector2, GO_Figure>
         item.transform.position = position;
         item.Model.Velocity.Value = velocity;
     }
+
+    protected override void OnDespawned(GO_Figure item)
+    {
+        item.Model.FigureData.Value = null;
+    }
 }

@@ -76,4 +76,12 @@ public class FiguresSpreader : MonoBehaviour
                 await UniTask.WaitForSeconds(waitTime, cancellationToken: token);
         }
     }
+
+    private void OnDestroy()
+    {
+        _eventBus.Unsubscribe<GameEvent_StartSpreadFigures>(OnStartSpreadFigures);
+        _eventBus.Unsubscribe<GameEvent_StopSpreadFigures>(OnStopSpreadFigures);
+        _spreadCTS?.Cancel();
+        _spreadCTS?.Dispose();
+    }
 }
