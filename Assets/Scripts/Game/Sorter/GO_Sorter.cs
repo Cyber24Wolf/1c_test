@@ -44,7 +44,7 @@ public class GO_Sorter : MonoBehaviour
         {
             var offset = i - middle;
             var adjust = (_slots.Count % 2 == 0) ? _distanceBetweenSlots / 2 : 0;
-            var pos = transform.position + transform.right * (offset * _distanceBetweenSlots + adjust);
+            var pos = transform.position + _slots[i].Model.FigureData.Value.spawnOffset + transform.right * (offset * _distanceBetweenSlots + adjust);
             _slots[i].transform.position = pos;
         }
 
@@ -55,18 +55,18 @@ public class GO_Sorter : MonoBehaviour
     {
         var width = (count - 1) * _distanceBetweenSlots + _backgroundPadding.x * 2;
         var height = _backgroundHeight + _backgroundPadding.y * 2;
-        _background.size = new Vector3(width, height);
+        _background.size = new Vector2(width, height);
         _background.transform.position = transform.position;
-    }
-
-    private void OnValidate()
-    {
-        UpdateSlotsPositions();
     }
 
     private void OnDestroy()
     {
         _slots.Clear();
         _eventBus.Unsubscribe<GameEvent_SpawnSorterSlotsRequest>(OnSpawnRequest);
+    }
+
+    private void OnValidate()
+    {
+        UpdateSlotsPositions();
     }
 }

@@ -66,7 +66,7 @@ public class FiguresSpreader : MonoBehaviour
             var velocityY = Random.Range(_gameplayConfig.FiguresVelocityMin.y, _gameplayConfig.FiguresVelocityMax.y);
             _figuresFactory.Spawn(
                 _gameplayConfig.FigureTypes[dataIndex],
-                _spawnPositions[posIndex].position,
+                _spawnPositions[posIndex].position + _gameplayConfig.FigureTypes[dataIndex].spawnOffset,
                 new Vector2(velocityX, velocityY)
             );
 
