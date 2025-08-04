@@ -61,6 +61,8 @@ public class GO_Sorter : MonoBehaviour
 
     private void OnDestroy()
     {
+        for (var i = 0; i < _slots.Count; i++)
+            _slots[i] = null;
         _slots.Clear();
         _eventBus.Unsubscribe<GameEvent_SpawnSorterSlotsRequest>(OnSpawnRequest);
     }

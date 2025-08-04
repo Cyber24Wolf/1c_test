@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GO_Figure : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer     _renderer;
+    [SerializeField] private SpriteRenderer _renderer;
 
     private CompositeDisposable _disposables = new CompositeDisposable();
     private IAnimator_GO_Figure _animator;

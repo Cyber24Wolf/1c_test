@@ -4,6 +4,11 @@ public class ProjectInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<EventBus>().AsSingle();
+        Container
+            .Bind<EventBus>()
+            .AsSingle();
+        Container
+            .BindInterfacesTo<CollisionService>()
+            .AsSingle();
     }
 }
