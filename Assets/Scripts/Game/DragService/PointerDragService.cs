@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
-using static UnityEngine.InputSystem.InputAction;
 
 public interface IDragService
 {
@@ -60,7 +58,7 @@ public class PointerDragService : IDragService
         StopDrag();
     }
 
-    private void TryStartDrag(CallbackContext context)
+    private void TryStartDrag(InputAction.CallbackContext context)
     {
         if (_current != null)
             return;
@@ -83,7 +81,7 @@ public class PointerDragService : IDragService
         }
     }
 
-    private void StopDrag(CallbackContext context)
+    private void StopDrag(InputAction.CallbackContext context)
     {
         StopDrag();
     }
@@ -96,7 +94,7 @@ public class PointerDragService : IDragService
         _current = null;
     }
 
-    private void Drag(CallbackContext callbackContext)
+    private void Drag(InputAction.CallbackContext callbackContext)
     {
         if (_current == null)
             return;

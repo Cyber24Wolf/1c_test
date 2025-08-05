@@ -30,8 +30,13 @@ public class CollisionService : ICollisionService, ITickable, IDisposable
             for (int j = i + 1; j < _colliders.Count; j++)
             {
                 var b = _colliders[j];
+                
                 if (!a.Intersects(b))
                     continue;
+                
+                if (!a.CanCollideWith(b) && !b.CanCollideWith(a))
+                    continue;
+
                 var pair = new ColliderPair(a, b);
                 _currentCollisions.Add(pair);
 

@@ -67,7 +67,8 @@ public class FiguresSpreader : MonoBehaviour
             _figuresFactory.Spawn(
                 _gameplayConfig.FigureTypes[dataIndex],
                 _spawnPositions[posIndex].position + _gameplayConfig.FigureTypes[dataIndex].spawnOffset,
-                new Vector2(velocityX, velocityY)
+                new Vector2(velocityX, velocityY),
+                _gameplayConfig.VelocityControlMask
             );
 
             _figuresLeft -= 1;

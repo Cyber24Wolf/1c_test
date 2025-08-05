@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 0.5
-  _callCollisionStay: 0
+  _callStayEvent: 0
+  _layer: {fileID: 11400000, guid: ac96730349f22e24bbabde436c3c4e3c, type: 2}
+  _collisionMask: {fileID: 11400000, guid: 19c548720bfc3f745b93d5ce93828772, type: 2}
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1049812630989395793
 MonoBehaviour:
