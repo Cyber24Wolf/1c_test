@@ -65,7 +65,7 @@ public class PointerDragService : IDragService
         if (_current != null)
             return;
 
-        Vector2 mouseWorldPos = GetMouseWorldPosition(_inputActions.Player.PointerPosition.ReadValue<Vector2>());
+        var mouseWorldPos = GetMouseWorldPosition(_inputActions.Player.PointerPosition.ReadValue<Vector2>());
 
         for (int i = _draggables.Count - 1; i >= 0; i--)
         {
@@ -76,7 +76,7 @@ public class PointerDragService : IDragService
                 collider.ContainsPoint(mouseWorldPos))
             {
                 _current = draggable;
-                _dragOffset = draggable.transform.position - (Vector3)mouseWorldPos;
+                _dragOffset = draggable.transform.position - mouseWorldPos;
                 _eventBus.Publish(new GameEvent_OnDragStart(_current));
                 return;
             }
