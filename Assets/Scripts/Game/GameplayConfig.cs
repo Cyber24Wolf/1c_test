@@ -13,6 +13,10 @@ public interface IGameplayConfig
     Vector2         FiguresVelocityMax  { get; }
     float           FiguresSpawnTimeMin { get; }
     float           FiguresSpawnTimeMax { get; }
+    float           FigureReturnSpeed   { get; }
+
+    CollisionLayerMask VelocityControlMask { get; }
+    CollisionLayerMask DragControlMask     { get; }
 }
 
 [CreateAssetMenu(fileName = "GameplayConfig", menuName = "Game/GameplayConfig")]
@@ -30,6 +34,11 @@ public class GameplayConfig : ScriptableObject, IGameplayConfig
     [SerializeField] private Vector2         figuresVelocityMax  = Vector2.right * 2;
     [SerializeField] private float           figuresSpawnTimeMin = 2;
     [SerializeField] private float           figuresSpawnTimeMax = 5;
+    [SerializeField] private float           figureReturnSpeed    = 0.5f;
+
+    [Header("Figures Collisions")]
+    [SerializeField] private CollisionLayerMask velocityControlMask;
+    [SerializeField] private CollisionLayerMask dragControlMask;
 
     public int InitialLifes    => initialLifes;
     public int LifesPerFigure  => lifesPerFigure;
@@ -41,4 +50,8 @@ public class GameplayConfig : ScriptableObject, IGameplayConfig
     public Vector2 FiguresVelocityMax  => figuresVelocityMax;
     public float FiguresSpawnTimeMin   => figuresSpawnTimeMin;
     public float FiguresSpawnTimeMax   => figuresSpawnTimeMax;
+    public float FigureReturnSpeed     => figureReturnSpeed;
+
+    public CollisionLayerMask VelocityControlMask => velocityControlMask;
+    public CollisionLayerMask DragControlMask     => dragControlMask;
 }

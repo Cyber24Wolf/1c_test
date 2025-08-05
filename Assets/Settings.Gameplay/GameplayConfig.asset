@@ -25,3 +25,6 @@ MonoBehaviour:
   figuresVelocityMax: {x: 2, y: 0}
   figuresSpawnTimeMin: 2
   figuresSpawnTimeMax: 5
+  figureReturnSpeed: 25
+  velocityControlMask: {fileID: 11400000, guid: 3ac001f15b7f7d348be7b9157476ef5c, type: 2}
+  dragControlMask: {fileID: 11400000, guid: ba5918b442b86514699ac2b21d5a74ae, type: 2}
