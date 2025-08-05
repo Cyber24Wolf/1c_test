@@ -623,6 +623,7 @@ MonoBehaviour:
   _initialFiguresCount: 3
   _sorterSlot: {fileID: 816942838}
   _initialSorterSlotsCount: 3
+  _camera: {fileID: 519420031}
 --- !u!114 &514427207
 MonoBehaviour:
   m_ObjectHideFlags: 0

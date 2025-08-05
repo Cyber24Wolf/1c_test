@@ -29,5 +29,10 @@ public class GameplayInstaller : MonoInstaller
             .To<FiguresDestroyer>()
             .AsSingle()
             .NonLazy();
+        Container
+            .Bind<IFigureDragService>()
+            .To<FiguresDragService>()
+            .AsSingle()
+            .NonLazy();
     }
 }

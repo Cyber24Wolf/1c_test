@@ -7,6 +7,7 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private int           _initialFiguresCount = 3;
     [SerializeField] private GO_SorterSlot _sorterSlot;
     [SerializeField] private int           _initialSorterSlotsCount = 3;
+    [SerializeField] private Camera       _camera;
 
     public override void InstallBindings()
     {
@@ -28,6 +29,11 @@ public class SceneInstaller : MonoInstaller
         Container
             .Bind<ISorterSlotFactory>()
             .To<SorterSlotFactory>()
+            .AsSingle();
+
+        Container
+            .Bind<Camera>()
+            .FromInstance(_camera)
             .AsSingle();
     }
 }

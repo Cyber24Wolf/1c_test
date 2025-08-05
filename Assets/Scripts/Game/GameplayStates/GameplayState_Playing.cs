@@ -15,6 +15,7 @@ public class GameplayState_Playing : IGameplayState, IDisposable
     {
         _eventBus.Publish(new GameEvent_StartSpreadFigures(_gameplayConfig.FiguresCount));
         _eventBus.Publish(new GameEvent_SpawnSorterSlotsRequest(_gameplayConfig.FigureTypes));
+        _eventBus.Publish(new GameEvent_EnableInputRequest());
     }
 
     public void Exit()

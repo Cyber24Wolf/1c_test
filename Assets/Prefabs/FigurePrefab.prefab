@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 869353691419897855}
   - component: {fileID: 1225271958536901439}
   - component: {fileID: 5540514743993067185}
+  - component: {fileID: 3983793283545417164}
   m_Layer: 0
   m_Name: FigurePrefab
   m_TagString: Untagged
@@ -79,8 +80,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 0.5
-  _isTrigger: 1
+  _callStayEvent: 0
   _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &3983793283545417164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270287303136156372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6469355752cc74798de4d08be681dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7694604453128501233
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,9 +13,9 @@ public class GO_LightCollider : MonoBehaviour
 
     private ICollisionService _collisionService;
 
-    public Vector2 Center            => transform.position;
-    public float   Radius            => _radius;
-    public bool    CallStayEvent     => _callStayEvent;
+    public Vector2 Center        => transform.position;
+    public float   Radius        => _radius;
+    public bool    CallStayEvent => _callStayEvent;
 
     [Inject]
     private void Setup(ICollisionService collisionService) 

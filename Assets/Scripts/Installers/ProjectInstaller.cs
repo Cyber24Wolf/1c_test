@@ -10,5 +10,11 @@ public class ProjectInstaller : MonoInstaller
         Container
             .BindInterfacesTo<CollisionService>()
             .AsSingle();
+        Container
+            .BindInterfacesTo<PointerDragService>()
+            .AsSingle();
+        Container
+            .BindInterfacesTo<InputService>()
+            .AsSingle();
     }
 }
