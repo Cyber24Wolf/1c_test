@@ -71,7 +71,8 @@ public class FiguresDragService : IFigureDragService, IDisposable
         var result = new List<GO_LightCollider>();
         _collisionService.GetIntersections(figureCollider, result);
 
-        var intersectSlot = false;
+        GO_SorterSlot closestSort = null;
+        float closestDistance = -1f;
         foreach (var collider in result)
         {
             if (!collider.TryGetComponent<GO_SorterSlot>(out var slot))
@@ -79,15 +80,24 @@ public class FiguresDragService : IFigureDragService, IDisposable
             if (slot.Model.FigureData.Value == null)
                 continue;
 
-            intersectSlot = true;
-            if (slot.Model.FigureData.Value == figure.Model.FigureData.Value)
-                _eventBus.Publish(new GameEvent_FigureSortingCorrect(slot, figure));
-            else
-                _eventBus.Publish(new GameEvent_FigureSortingWrong(slot, figure));
+            var currentSqrDistance = (figure.transform.position - slot.transform.position).sqrMagnitude;
+            if (closestDistance < 0 || ((closestDistance * closestDistance) > currentSqrDistance))
+            {
+                closestSort = slot;
+                closestDistance = currentSqrDistance;
+            }
         }
 
-        if (intersectSlot == false)
+        if (closestSort == null)
+        {
             ReturnToLastPositionAsync(figure).Forget();
+            return;
+        }
+
+        if (closestSort.Model.FigureData.Value == figure.Model.FigureData.Value)
+            _eventBus.Publish(new GameEvent_FigureSortingCorrect(closestSort, figure));
+        else
+            _eventBus.Publish(new GameEvent_FigureSortingWrong(closestSort, figure));
     }
 
     private async UniTask ReturnToLastPositionAsync(GO_Figure figure)
