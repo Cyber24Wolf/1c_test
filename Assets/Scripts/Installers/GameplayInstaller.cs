@@ -19,8 +19,8 @@ public class GameplayInstaller : MonoInstaller
             .NonLazy();
 
         Container
-            .Bind<IDamageDealerService>()
-            .To<DamageDealerService>()
+            .Bind<IDetectDamageService>()
+            .To<DetectDamageService>()
             .AsSingle()
             .NonLazy();
 
@@ -32,6 +32,23 @@ public class GameplayInstaller : MonoInstaller
         Container
             .Bind<IFigureDragService>()
             .To<FiguresDragService>()
+            .AsSingle()
+            .NonLazy();
+
+        Container
+            .Bind<IDragFigureToSorterLogic>()
+            .To<DragFigureToSorterLogic>()
+            .AsSingle()
+            .NonLazy();
+        Container
+            .Bind<IFigureSortingLogic>()
+            .To<FigureSortingLogic>()
+            .AsSingle()
+            .NonLazy();
+
+        Container
+            .Bind<ILifeService>()
+            .To<LifeService>()
             .AsSingle()
             .NonLazy();
     }

@@ -1,13 +1,15 @@
-﻿public interface IDamageDealerService
+﻿using System;
+
+public interface IDetectDamageService
 {
 }
 
-public class DamageDealerService : IDamageDealerService
+public class DetectDamageService : IDetectDamageService, IDisposable
 {
     private readonly EventBus        _eventBus;
     private readonly IGameplayConfig _gameplayConfig;
 
-    public DamageDealerService(
+    public DetectDamageService(
         EventBus eventBus,
         IGameplayConfig gameplayConfig)
     {
@@ -15,6 +17,11 @@ public class DamageDealerService : IDamageDealerService
         _gameplayConfig = gameplayConfig;
 
         _eventBus.Subscribe<GameEvent_CollisionEnter>(DetectDamageFromCollision);
+    }
+
+    public void Dispose()
+    {
+        _eventBus.Unsubscribe<GameEvent_CollisionEnter>(DetectDamageFromCollision);
     }
 
     private void DetectDamageFromCollision(GameEvent_CollisionEnter collision)
@@ -31,6 +38,7 @@ public class DamageDealerService : IDamageDealerService
         if (figure == null || damageDealer == null)
             return;
 
-        _eventBus.Publish(new GameEvent_DamageDetected(figure, damageDealer, _gameplayConfig.LifesPerFigure));
+        _eventBus.Publish(new GameEvent_FigureCollisionDetected(figure, damageDealer));
+        _eventBus.Publish(new GameEvent_DealDamageRequest(_gameplayConfig.LifesPerMissedFigure));
     }
 }

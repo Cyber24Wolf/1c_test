@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-public interface IFiguresDestroyer { }
+﻿public interface IFiguresDestroyer { }
 
 public class FiguresDestroyer : IFiguresDestroyer
 {
@@ -11,10 +9,10 @@ public class FiguresDestroyer : IFiguresDestroyer
         FigurePool figurePool)
     {
         _figurePool = figurePool;
-        eventBus.Subscribe<GameEvent_DamageDetected>(OnDamageDetected);
+        eventBus.Subscribe<GameEvent_FigureCollisionDetected>(OnDamageDetected);
     }
 
-    private void OnDamageDetected(GameEvent_DamageDetected e)
+    private void OnDamageDetected(GameEvent_FigureCollisionDetected e)
     {
         e.Figure.Model.HideCommand.Execute(new GO_Figure.HideInput(explode: false, OnFigureHide));
     }

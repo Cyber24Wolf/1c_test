@@ -6,6 +6,7 @@ public interface ICollisionService
 {
     void Register(GO_LightCollider collider);
     void Unregister(GO_LightCollider collider);
+    void GetIntersections(GO_LightCollider collider, List<GO_LightCollider> result);
 }
 
 public class CollisionService : ICollisionService, ITickable, IDisposable
@@ -58,6 +59,26 @@ public class CollisionService : ICollisionService, ITickable, IDisposable
         }
 
         (_previousCollisions, _currentCollisions) = (_currentCollisions, _previousCollisions);
+    }
+
+    public void GetIntersections(GO_LightCollider collider, List<GO_LightCollider> result)
+    {
+        if (result == null)
+            return;
+
+        if (collider == null)
+            return;
+
+        if (result.Count > 0)
+            return;
+
+        foreach (var pair in _previousCollisions)
+        {
+            if (pair.A == collider)
+                result.Add(pair.B);
+            else if (pair.B == collider)
+                result.Add(pair.A);
+        }
     }
 
     public void Dispose()

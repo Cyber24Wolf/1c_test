@@ -3,7 +3,7 @@
 public class GameplayState_Playing : IGameplayState, IDisposable
 {
     private readonly EventBus _eventBus;
-    private readonly IGameplayConfig _gameplayConfig;
+    private IGameplayConfig _gameplayConfig;
 
     public GameplayState_Playing(EventBus eventBus, IGameplayConfig gameplayConfig)
     {
@@ -16,6 +16,7 @@ public class GameplayState_Playing : IGameplayState, IDisposable
         _eventBus.Publish(new GameEvent_StartSpreadFigures(_gameplayConfig.FiguresCount));
         _eventBus.Publish(new GameEvent_SpawnSorterSlotsRequest(_gameplayConfig.FigureTypes));
         _eventBus.Publish(new GameEvent_EnableInputRequest());
+        _eventBus.Publish(new GameEvent_SetLifesRequest(_gameplayConfig.InitialLifes));
     }
 
     public void Exit()
@@ -24,5 +25,6 @@ public class GameplayState_Playing : IGameplayState, IDisposable
 
     public void Dispose()
     {
+        _gameplayConfig = null;
     }
 }

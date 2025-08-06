@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8891980872600587386}
   - component: {fileID: 3984910652557229038}
+  - component: {fileID: 8258258031273213322}
   m_Layer: 0
   m_Name: SorterSlotPrefab
   m_TagString: Untagged
@@ -46,6 +47,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 7070704794937388028}
+--- !u!114 &8258258031273213322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7302522553147954411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962749a124f2f6d4286fe9b6e1bba898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 0.5
+  _callStayEvent: 0
+  _layer: {fileID: 11400000, guid: 2a2d1fbd65c5bb049a423b816bd665c5, type: 2}
+  _collisionMask: {fileID: 11400000, guid: 85e21f080e308e14b9ff539468e23f5b, type: 2}
+  _gizmoColor: {r: 0.3592856, g: 0.8018868, b: 0, a: 1}
 --- !u!1 &7905105666199444648
 GameObject:
   m_ObjectHideFlags: 0

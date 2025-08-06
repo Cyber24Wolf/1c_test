@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GameplayConfig
   m_EditorClassIdentifier: 
   initialLifes: 100
-  lifesPerFigure: 1
+  lifesPerMissedFigure: 1
+  lifesPerWrongFigure: 1
   scoresPerFigure: 1
   figuresCount: 350
   figureTypes:
