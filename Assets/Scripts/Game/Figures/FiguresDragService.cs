@@ -12,14 +12,18 @@ public class FiguresDragService : IFigureDragService, IDisposable
 {
     private readonly EventBus                 _eventBus;
     private readonly IGameplayConfig          _gameplayConfig;
+    private readonly ICollisionService        _collisionService;
     private readonly Dictionary<int, Vector3> _lastPositions = new();
+    private readonly List<GO_LightCollider>   _tempIntersections = new();
 
     public FiguresDragService(
         EventBus eventBus,
-        IGameplayConfig gameplayConfig)
+        IGameplayConfig gameplayConfig,
+        ICollisionService collisionService)
     {
-        _eventBus       = eventBus;
-        _gameplayConfig = gameplayConfig;
+        _eventBus         = eventBus;
+        _gameplayConfig   = gameplayConfig;
+        _collisionService = collisionService;
 
         eventBus.Subscribe<GameEvent_OnDragStart>(OnDragStart);
         eventBus.Subscribe<GameEvent_OnDragStop>(OnDragStop);
@@ -46,10 +50,45 @@ public class FiguresDragService : IFigureDragService, IDisposable
 
     private void OnDragStop(GameEvent_OnDragStop e)
     {
+        if (e.Draggable == null)
+            return;
+
         if (!e.Draggable.TryGetComponent<GO_Figure>(out var figure))
             return;
 
+        if (figure.TryGetComponent<GO_LightCollider>(out var figureCollider))
+        {
+            CheckSorterSlots(figure, figureCollider);
+            return;
+        }
         ReturnToLastPositionAsync(figure).Forget();
+    }
+
+    private void CheckSorterSlots(GO_Figure figure, GO_LightCollider figureCollider)
+    {
+        if (figureCollider == null)
+            return;
+
+        _tempIntersections.Clear();
+        _collisionService.GetIntersections(figureCollider, _tempIntersections);
+
+        var intersectSlot = false;
+        foreach (var collider in _tempIntersections)
+        {
+            if (!collider.TryGetComponent<GO_SorterSlot>(out var slot))
+                continue;
+            if (slot.Model.FigureData.Value == null)
+                continue;
+
+            intersectSlot = true;
+            if (slot.Model.FigureData.Value == figure.Model.FigureData.Value)
+                _eventBus.Publish(new GameEvent_FigureSortingCorrect(slot, figure));
+            else
+                _eventBus.Publish(new GameEvent_FigureSortingWrong(slot, figure));
+        }
+
+        if (intersectSlot == false)
+            ReturnToLastPositionAsync(figure).Forget();
     }
 
     private async UniTask ReturnToLastPositionAsync(GO_Figure figure)

@@ -3,7 +3,7 @@ using Zenject;
 
 public interface IFiguresFactory
 {
-    GO_Figure Spawn(DO_Figure figureData, Vector3 position, Vector2 velocity, CollisionLayerMask collisionLayerMask);
+    GO_Figure Spawn(DO_Figure figureData, Vector3 position, Vector2 velocity, CollisionLayerMask collisionLayerMask, bool manualControl);
 }
 
 public class FiguresFactory : IFiguresFactory
@@ -15,19 +15,21 @@ public class FiguresFactory : IFiguresFactory
         _pool = squarePool;
     }
 
-    public GO_Figure Spawn(DO_Figure data, Vector3 position, Vector2 velocity, CollisionLayerMask collisionLayerMask)
+    public GO_Figure Spawn(DO_Figure data, Vector3 position, Vector2 velocity, CollisionLayerMask collisionLayerMask, bool manualControl)
     {
-        return _pool.Spawn(data, position, velocity, collisionLayerMask);
+        return _pool.Spawn(data, position, velocity, collisionLayerMask, manualControl);
     }
 }
 
-public class FigurePool : MonoMemoryPool<DO_Figure, Vector3, Vector2, CollisionLayerMask, GO_Figure>
+public class FigurePool : MonoMemoryPool<DO_Figure, Vector3, Vector2, CollisionLayerMask, bool, GO_Figure>
 {
-    protected override void Reinitialize(DO_Figure data, Vector3 position, Vector2 velocity, CollisionLayerMask collisionLayerMask, GO_Figure item)
+    protected override void Reinitialize(DO_Figure data, Vector3 position, Vector2 velocity, CollisionLayerMask collisionLayerMask, bool manualControl, GO_Figure item)
     {
-        item.Model.FigureData.Value = data;
         item.transform.position = position;
-        item.Model.Velocity.Value = velocity;
+        
+        item.Model.FigureData   .Value = data;
+        item.Model.Velocity     .Value = velocity;
+        item.Model.ManualControl.Value = manualControl;
 
         if (!item.TryGetComponent<GO_LightCollider>(out var collider))
             return;

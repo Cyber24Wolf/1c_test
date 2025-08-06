@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public readonly struct GameEvent_OnDealDamage
+﻿public readonly struct GameEvent_OnDealDamage
 {
     public int OldValue { get; }
     public int NewValue { get; }

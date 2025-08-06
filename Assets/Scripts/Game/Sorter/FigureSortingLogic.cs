@@ -27,7 +27,7 @@ public class FigureSortingLogic : IFigureSortingLogic, IDisposable
 
     private void OnSortingCorrect(GameEvent_FigureSortingCorrect e)
     {
-        
+        _eventBus.Publish(new GameEvent_AddScoresRequest(_gameplayConfig.ScoresPerFigure));
     }
 
     private void OnSortingWrong(GameEvent_FigureSortingWrong e)

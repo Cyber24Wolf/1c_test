@@ -17,6 +17,7 @@ public class GameplayState_Playing : IGameplayState, IDisposable
         _eventBus.Publish(new GameEvent_SpawnSorterSlotsRequest(_gameplayConfig.FigureTypes));
         _eventBus.Publish(new GameEvent_EnableInputRequest());
         _eventBus.Publish(new GameEvent_SetLifesRequest(_gameplayConfig.InitialLifes));
+        _eventBus.Publish(new GameEvent_SetScoresRequest(newValue: 0));
     }
 
     public void Exit()

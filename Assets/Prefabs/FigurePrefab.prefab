@@ -65,7 +65,7 @@ MonoBehaviour:
   _renderer: {fileID: 6507767109163887728}
   _showDuration: 0.15
   _hideDuration: 0.15
-  _explodeDuration: 0.5
+  _explodeDuration: 0.15
   _explodeScale: 3
 --- !u!114 &5540514743993067185
 MonoBehaviour:

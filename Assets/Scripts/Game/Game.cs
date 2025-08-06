@@ -1,17 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
 
 public interface IGame
 {
 }
 
-public class Game : IGame
+public class Game : IGame, IDisposable
 {
     private readonly GameplayStateMachine _stateMachine;
     private readonly EventBus _eventBus;
 
-    public Game(
-        EventBus eventBus,
-        IGameplayConfig gameplayConfig)
+    public Game(EventBus eventBus, IGameplayConfig gameplayConfig)
     {
         _eventBus = eventBus;
 
@@ -21,16 +19,21 @@ public class Game : IGame
         _stateMachine.Register(new GameplayState_Win());
         _stateMachine.Register(new GameplayState_Loose());
 
-        _eventBus.Subscribe<GameEvent_LifesChanged>(OnLifesChanged);
+        _eventBus.Subscribe<GameEvent_OnDeath>(OnDeath);
         _eventBus.Subscribe<GameEvent_StartGameRequest>(OnGameStartEvent);
 
         _stateMachine.ChangeState<GameplayState_Idle>();
     }
 
-    private void OnLifesChanged(GameEvent_LifesChanged e)
+    public void Dispose()
     {
-        if (e.New <= 0)
-            Loose();
+        _eventBus.Unsubscribe<GameEvent_OnDeath>(OnDeath);
+        _eventBus.Unsubscribe<GameEvent_StartGameRequest>(OnGameStartEvent);
+    }
+
+    private void OnDeath(GameEvent_OnDeath e)
+    {
+        Loose();
     }
 
     private void OnGameStartEvent(GameEvent_StartGameRequest evt) 

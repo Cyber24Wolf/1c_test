@@ -36,11 +36,6 @@ public class GameplayInstaller : MonoInstaller
             .NonLazy();
 
         Container
-            .Bind<IDragFigureToSorterLogic>()
-            .To<DragFigureToSorterLogic>()
-            .AsSingle()
-            .NonLazy();
-        Container
             .Bind<IFigureSortingLogic>()
             .To<FigureSortingLogic>()
             .AsSingle()
@@ -49,6 +44,11 @@ public class GameplayInstaller : MonoInstaller
         Container
             .Bind<ILifeService>()
             .To<LifeService>()
+            .AsSingle()
+            .NonLazy();
+        Container
+            .Bind<IScoresService>()
+            .To<ScoresService>()
             .AsSingle()
             .NonLazy();
     }
