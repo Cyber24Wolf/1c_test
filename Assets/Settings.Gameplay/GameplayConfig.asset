@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e628cfa5cb7fc048a4694c855276839, type: 3}
   m_Name: GameplayConfig
   m_EditorClassIdentifier: 
-  initialLifes: 2
+  initialLifes: 10
   lifesPerMissedFigure: 1
   lifesPerWrongFigure: 1
   scoresPerFigure: 1
-  figuresCount: 3
+  figuresCount: 70
   figureTypes:
   - {fileID: 11400000, guid: 69e6cfecca6bd9e4d8dece002c4ecd85, type: 2}
   - {fileID: 11400000, guid: f46c2a5c58df73743ac26e6e53f5f8ef, type: 2}
   - {fileID: 11400000, guid: c1ec0800a44e22e4080ecc801923d928, type: 2}
   - {fileID: 11400000, guid: 982a7bffd5e5b8d4abdab071a9101620, type: 2}
-  figuresVelocityMin: {x: 1, y: 0}
-  figuresVelocityMax: {x: 2, y: 0}
-  figuresSpawnTimeMin: 0.25
-  figuresSpawnTimeMax: 1
+  figuresVelocityMin: {x: 2.5, y: 0}
+  figuresVelocityMax: {x: 3, y: 0}
+  figuresSpawnTimeMin: 0.8
+  figuresSpawnTimeMax: 1.1
   figureReturnSpeed: 25
   velocityControlMask: {fileID: 11400000, guid: 3ac001f15b7f7d348be7b9157476ef5c, type: 2}
   dragControlMask: {fileID: 11400000, guid: ba5918b442b86514699ac2b21d5a74ae, type: 2}
