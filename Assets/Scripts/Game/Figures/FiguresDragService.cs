@@ -57,13 +57,13 @@ public class FiguresDragService : IFigureDragService, IDisposable
 
         if (figure.TryGetComponent<GO_LightCollider>(out var figureCollider))
         {
-            CheckSorterSlots(figure, figureCollider);
+            CheckSorterSlots(figure, figureCollider, e.Draggable);
             return;
         }
-        ReturnToLastPositionAsync(figure).Forget();
+        ReturnToLastPositionAsync(figure, e.Draggable).Forget();
     }
 
-    private void CheckSorterSlots(GO_Figure figure, GO_LightCollider figureCollider)
+    private void CheckSorterSlots(GO_Figure figure, GO_LightCollider figureCollider, GO_Draggable draggable)
     {
         if (figureCollider == null)
             return;
@@ -90,7 +90,7 @@ public class FiguresDragService : IFigureDragService, IDisposable
 
         if (closestSort == null)
         {
-            ReturnToLastPositionAsync(figure).Forget();
+            ReturnToLastPositionAsync(figure, draggable).Forget();
             return;
         }
 
@@ -100,20 +100,21 @@ public class FiguresDragService : IFigureDragService, IDisposable
             _eventBus.Publish(new GameEvent_FigureSortingWrong(closestSort, figure));
     }
 
-    private async UniTask ReturnToLastPositionAsync(GO_Figure figure)
+    private async UniTask ReturnToLastPositionAsync(GO_Figure figure, GO_Draggable draggable)
     {
         var instanceId = figure.GetInstanceID();
         var pos = _lastPositions[instanceId];
         _lastPositions.Remove(instanceId);
 
         var time = (pos - figure.transform.position).magnitude / _gameplayConfig.FigureReturnSpeed;
-        
+        draggable.enabled = false;
         await LMotion
             .Create(figure.transform.position, pos, time)
             .WithEase(Ease.InSine)
             .BindToPosition(figure.transform)
             .ToAwaitable();
         figure.Model.ManualControl.Value = false;
+        draggable.enabled = true;
 
         if (!figure.TryGetComponent<GO_LightCollider>(out var collider))
             return;

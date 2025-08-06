@@ -70,6 +70,7 @@ public class PointerDragService : IDragService
             var draggable = _draggables[i];
             if (draggable == null)
                 continue;
+
             if (draggable.TryGetComponent<GO_LightCollider>(out var collider) &&
                 collider.ContainsPoint(mouseWorldPos))
             {
@@ -98,6 +99,12 @@ public class PointerDragService : IDragService
     {
         if (_current == null)
             return;
+
+        if (_current.enabled == false)
+        {
+            StopDrag();
+            return;
+        }
 
         Vector2 mouseWorldPos = GetMouseWorldPosition(callbackContext.ReadValue<Vector2>());
         _current.transform.position = mouseWorldPos + (Vector2)_dragOffset;
