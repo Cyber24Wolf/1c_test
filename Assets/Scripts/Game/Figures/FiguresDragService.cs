@@ -14,7 +14,6 @@ public class FiguresDragService : IFigureDragService, IDisposable
     private readonly IGameplayConfig          _gameplayConfig;
     private readonly ICollisionService        _collisionService;
     private readonly Dictionary<int, Vector3> _lastPositions = new();
-    private readonly List<GO_LightCollider>   _tempIntersections = new();
 
     public FiguresDragService(
         EventBus eventBus,
@@ -69,11 +68,11 @@ public class FiguresDragService : IFigureDragService, IDisposable
         if (figureCollider == null)
             return;
 
-        _tempIntersections.Clear();
-        _collisionService.GetIntersections(figureCollider, _tempIntersections);
+        var result = new List<GO_LightCollider>();
+        _collisionService.GetIntersections(figureCollider, result);
 
         var intersectSlot = false;
-        foreach (var collider in _tempIntersections)
+        foreach (var collider in result)
         {
             if (!collider.TryGetComponent<GO_SorterSlot>(out var slot))
                 continue;

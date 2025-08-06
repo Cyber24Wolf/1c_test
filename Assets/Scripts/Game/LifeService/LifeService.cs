@@ -3,6 +3,7 @@ using UnityEngine;
 
 public interface ILifeService
 {
+    public bool IsAlive();
 }
 
 public class LifeService : ILifeService, IDisposable
@@ -25,9 +26,14 @@ public class LifeService : ILifeService, IDisposable
         _eventBus.Unsubscribe<GameEvent_SetLifesRequest>(OnSetLifes);
     }
 
+    public bool IsAlive()
+    {
+        return _currentLifes != 0;
+    }
+
     private void OnDealDamageRequest(GameEvent_DealDamageRequest e)
     {
-        if (_currentLifes == 0)
+        if (!IsAlive())
             return;
 
         var oldLifes = _currentLifes;
@@ -35,7 +41,7 @@ public class LifeService : ILifeService, IDisposable
         _currentLifes = Mathf.Max(0, _currentLifes);
 
         _eventBus.Publish(new GameEvent_OnDealDamage(oldLifes, _currentLifes, e.Damage));
-        if (_currentLifes == 0)
+        if (!IsAlive())
             _eventBus.Publish(new GameEvent_OnDeath());
     }
 

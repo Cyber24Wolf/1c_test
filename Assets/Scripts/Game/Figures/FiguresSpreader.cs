@@ -64,13 +64,15 @@ public class FiguresSpreader : MonoBehaviour
             var posIndex  = Random.Range(0, _spawnPositions.Count);
             var velocityX = Random.Range(_gameplayConfig.FiguresVelocityMin.x, _gameplayConfig.FiguresVelocityMax.x);
             var velocityY = Random.Range(_gameplayConfig.FiguresVelocityMin.y, _gameplayConfig.FiguresVelocityMax.y);
-            _figuresFactory.Spawn(
+
+            var figure = _figuresFactory.Spawn(
                 _gameplayConfig.FigureTypes[dataIndex],
                 _spawnPositions[posIndex].position + _gameplayConfig.FigureTypes[dataIndex].spawnOffset,
                 new Vector2(velocityX, velocityY),
                 _gameplayConfig.VelocityControlMask,
                 manualControl: false
             );
+            _eventBus.Publish(new GameEvent_OnFigureSpawned(figure));
 
             _figuresLeft -= 1;
             var waitTime = Random.Range(_gameplayConfig.FiguresSpawnTimeMin, _gameplayConfig.FiguresSpawnTimeMax);
@@ -85,5 +87,6 @@ public class FiguresSpreader : MonoBehaviour
         _eventBus.Unsubscribe<GameEvent_StopSpreadFigures>(OnStopSpreadFigures);
         _spreadCTS?.Cancel();
         _spreadCTS?.Dispose();
+        _gameplayConfig = null;
     }
 }

@@ -34,6 +34,11 @@ public class GameplayInstaller : MonoInstaller
             .To<FiguresDragService>()
             .AsSingle()
             .NonLazy();
+        Container
+            .Bind<IFiguresCounter>()
+            .To<FiguresCounter>()
+            .AsSingle()
+            .NonLazy();
 
         Container
             .Bind<IFigureSortingLogic>()

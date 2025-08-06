@@ -8,10 +8,12 @@ public class Game : IGame, IDisposable
 {
     private readonly GameplayStateMachine _stateMachine;
     private readonly EventBus _eventBus;
+    private readonly ILifeService _lifeService;
 
-    public Game(EventBus eventBus, IGameplayConfig gameplayConfig)
+    public Game(EventBus eventBus, IGameplayConfig gameplayConfig, ILifeService lifeService)
     {
-        _eventBus = eventBus;
+        _eventBus    = eventBus;
+        _lifeService = lifeService;
 
         _stateMachine = new GameplayStateMachine();
         _stateMachine.Register(new GameplayState_Idle());
@@ -21,6 +23,7 @@ public class Game : IGame, IDisposable
 
         _eventBus.Subscribe<GameEvent_OnDeath>(OnDeath);
         _eventBus.Subscribe<GameEvent_StartGameRequest>(OnGameStartEvent);
+        _eventBus.Subscribe<GameEvent_NoFiguresLeft>(OnNoFiguresLeftEvent);
 
         _stateMachine.ChangeState<GameplayState_Idle>();
     }
@@ -34,6 +37,14 @@ public class Game : IGame, IDisposable
     private void OnDeath(GameEvent_OnDeath e)
     {
         Loose();
+    }
+
+    private void OnNoFiguresLeftEvent(GameEvent_NoFiguresLeft e)
+    {
+        if (_lifeService.IsAlive())
+            Win();
+        else
+            Loose();
     }
 
     private void OnGameStartEvent(GameEvent_StartGameRequest evt) 

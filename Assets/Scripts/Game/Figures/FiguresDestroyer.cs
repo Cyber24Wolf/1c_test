@@ -48,5 +48,6 @@ public class FiguresDestroyer : IFiguresDestroyer, IDisposable
     private void OnFigureHide(GO_Figure figure)
     {
         _figurePool.Despawn(figure);
+        _eventBus.Publish(new GameEvent_OnFigureDestroyed(figure));
     }
 }

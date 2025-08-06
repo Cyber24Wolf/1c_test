@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e628cfa5cb7fc048a4694c855276839, type: 3}
   m_Name: GameplayConfig
   m_EditorClassIdentifier: 
-  initialLifes: 100
+  initialLifes: 2
   lifesPerMissedFigure: 1
   lifesPerWrongFigure: 1
   scoresPerFigure: 1
-  figuresCount: 350
+  figuresCount: 2
   figureTypes:
   - {fileID: 11400000, guid: 69e6cfecca6bd9e4d8dece002c4ecd85, type: 2}
   - {fileID: 11400000, guid: f46c2a5c58df73743ac26e6e53f5f8ef, type: 2}

@@ -69,8 +69,7 @@ public class CollisionService : ICollisionService, ITickable, IDisposable
         if (collider == null)
             return;
 
-        if (result.Count > 0)
-            return;
+        result.Clear();
 
         foreach (var pair in _previousCollisions)
         {
