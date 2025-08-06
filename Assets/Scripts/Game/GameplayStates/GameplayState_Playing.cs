@@ -14,7 +14,6 @@ public class GameplayState_Playing : IGameplayState, IDisposable
     public void Enter()
     {
         _eventBus.Publish(new GameEvent_StartSpreadFigures(_gameplayConfig.FiguresCount));
-        _eventBus.Publish(new GameEvent_SpawnSorterSlotsRequest(_gameplayConfig.FigureTypes));
         _eventBus.Publish(new GameEvent_EnableInputRequest());
         _eventBus.Publish(new GameEvent_SetLifesRequest(_gameplayConfig.InitialLifes));
         _eventBus.Publish(new GameEvent_SetFiguresCounterValuesRequest(alive: 0, destroyed: 0, _gameplayConfig.FiguresCount));

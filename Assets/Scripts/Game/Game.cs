@@ -16,7 +16,7 @@ public class Game : IGame, IDisposable
         _lifeService = lifeService;
 
         _stateMachine = new GameplayStateMachine();
-        _stateMachine.Register(new GameplayState_Idle());
+        _stateMachine.Register(new GameplayState_Idle(_eventBus, gameplayConfig));
         _stateMachine.Register(new GameplayState_Playing(_eventBus, gameplayConfig));
         _stateMachine.Register(new GameplayState_Win(_eventBus, scoresService));
         _stateMachine.Register(new GameplayState_Loose(_eventBus, scoresService));
