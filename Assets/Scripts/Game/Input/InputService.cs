@@ -18,14 +18,14 @@ public class InputService : IInputService, IDisposable
 
     private void ProcessEnableRequest(GameEvent_EnableInputRequest request)
     {
-        _inputActions.Enable();
         _eventBus.Publish(new GameEvent_InputEnabled(_inputActions));
+        _inputActions.Enable();
     }
 
     private void ProcessDisableRequest(GameEvent_DisableInputRequest request)
     {
-        _inputActions.Disable();
         _eventBus.Publish(new GameEvent_InputDisabled(_inputActions));
+        _inputActions.Disable();
     }
 
     public void Dispose()

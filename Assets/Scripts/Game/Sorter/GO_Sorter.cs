@@ -11,26 +11,33 @@ public class GO_Sorter : MonoBehaviour
 
     private EventBus            _eventBus;
     private ISorterSlotFactory  _sorterSlotFactory;
+    private SorterSlotPool      _sorterSlotPool;
     private List<GO_SorterSlot> _slots = new();
 
     [Inject]
     private void Setup(
         EventBus eventBus, 
-        ISorterSlotFactory sorterSlotFactory)
+        ISorterSlotFactory sorterSlotFactory,
+        SorterSlotPool sorterSlotPool)
     {
-        _eventBus = eventBus;
+        _eventBus          = eventBus;
         _sorterSlotFactory = sorterSlotFactory;
+        _sorterSlotPool    = sorterSlotPool;
 
         _eventBus.Subscribe<GameEvent_SpawnSorterSlotsRequest>(OnSpawnRequest);
     }
 
     private void OnSpawnRequest(GameEvent_SpawnSorterSlotsRequest request)
     {
+        for (var i = 0; i < _slots.Count; i++)
+            _sorterSlotPool.Despawn(_slots[i]);
         _slots.Clear();
+
         for (var i = 0; i < request.Figures.Length; i++)
             _slots.Add(
                 _sorterSlotFactory.Spawn(request.Figures[i])
             );
+
         UpdateSlotsPositions();
     }
 

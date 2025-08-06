@@ -1,12 +1,8 @@
-﻿public class GameplayState_Win : IGameplayState
+﻿public class GameplayState_Win : GameplayState_GameFinished
 {
-    public void Enter()
+    public override bool IsWin => true;
+
+    public GameplayState_Win(EventBus eventBus) : base(eventBus)
     {
-
-    }
-
-    public void Exit()
-    {
-
     }
 }

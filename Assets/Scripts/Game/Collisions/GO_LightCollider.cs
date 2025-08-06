@@ -55,6 +55,12 @@ public class GO_LightCollider : MonoBehaviour
 
     public bool CanCollideWith(GO_LightCollider other)
     {
+        if (enabled == false || other.enabled == false)
+            return false;
+
+        if (gameObject.activeInHierarchy == false || other.gameObject.activeInHierarchy == false) 
+            return false;
+
         if (_layer == null || other._layer == null)
             return true;
 

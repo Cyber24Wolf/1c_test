@@ -1,14 +1,8 @@
-﻿using UnityEngine;
-
-public class GameplayState_Loose : IGameplayState
+﻿public class GameplayState_Loose : GameplayState_GameFinished
 {
-    public void Enter()
-    {
-        Debug.Log("loose");
-    }
+    public override bool IsWin => false;
 
-    public void Exit()
+    public GameplayState_Loose(EventBus eventBus) : base(eventBus)
     {
-
     }
 }

@@ -1,3 +1,3 @@
-﻿public struct GameEvent_StopSpreadFigures
+﻿public readonly struct GameEvent_StopSpreadFigures
 {
 }

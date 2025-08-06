@@ -70,7 +70,6 @@ public class CollisionService : ICollisionService, ITickable, IDisposable
             return;
 
         result.Clear();
-
         foreach (var pair in _previousCollisions)
         {
             if (pair.A == collider)

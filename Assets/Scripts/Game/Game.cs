@@ -18,8 +18,8 @@ public class Game : IGame, IDisposable
         _stateMachine = new GameplayStateMachine();
         _stateMachine.Register(new GameplayState_Idle());
         _stateMachine.Register(new GameplayState_Playing(_eventBus, gameplayConfig));
-        _stateMachine.Register(new GameplayState_Win());
-        _stateMachine.Register(new GameplayState_Loose());
+        _stateMachine.Register(new GameplayState_Win(_eventBus));
+        _stateMachine.Register(new GameplayState_Loose(_eventBus));
 
         _eventBus.Subscribe<GameEvent_OnDeath>(OnDeath);
         _eventBus.Subscribe<GameEvent_StartGameRequest>(OnGameStartEvent);
@@ -41,6 +41,9 @@ public class Game : IGame, IDisposable
 
     private void OnNoFiguresLeftEvent(GameEvent_NoFiguresLeft e)
     {
+        if (_stateMachine.GetCurrentState() is not GameplayState_Playing)
+            return;
+
         if (_lifeService.IsAlive())
             Win();
         else

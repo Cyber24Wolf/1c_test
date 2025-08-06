@@ -3,6 +3,7 @@ using LitMotion;
 using R3;
 using System;
 using UnityEngine;
+using Zenject;
 
 public class GO_Figure : MonoBehaviour
 {
@@ -11,12 +12,19 @@ public class GO_Figure : MonoBehaviour
     private CompositeDisposable _disposables    = new CompositeDisposable();
     private IAnimator_GO_Figure _animator;
     private Action<GO_Figure>   _onHideComplete = null;
+    private IFiguresDestroyer   _destroyers;
 
     public ViewModel Model { get; private set; } = new();
 
     private void Awake()
     {
         _animator = GetComponent<IAnimator_GO_Figure>();
+    }
+
+    [Inject]
+    private void Setup(IFiguresDestroyer destroyer)
+    {
+        _destroyers = destroyer;
     }
 
     private void OnEnable()
@@ -32,9 +40,16 @@ public class GO_Figure : MonoBehaviour
         Model.ShowCommand
              .Subscribe(OnShowCommand)
              .AddTo(_disposables);
+
+        _destroyers.Register(this);
     }
 
-    private void OnDisable() => _disposables.Clear();
+    private void OnDisable()
+    {
+        _disposables.Clear();
+        _destroyers.Unregister(this);
+    }
+
     private void OnDestroy() => _disposables.Dispose();
 
     private void Update()

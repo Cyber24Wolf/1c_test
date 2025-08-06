@@ -19,22 +19,9 @@ public class PauseGameView : MonoBehaviour
     private void Setup(EventBus eventBus)
     {
         _eventBus = eventBus;
+
+
         SubscribeEvents();
-    }
-
-    private void SubscribeEvents()
-    {
-        if (_eventBus == null)
-            return;
-
-        _eventBus.Subscribe<GameEvent_Loose>(OnLoose);
-        _eventBus.Subscribe<GameEvent_Win>(OnWin);
-    }
-
-    private void UnsubscribeEvents()
-    {
-        _eventBus.Unsubscribe<GameEvent_Loose>(OnLoose);
-        _eventBus.Unsubscribe<GameEvent_Win>(OnWin);
     }
 
     private void OnEnable()
@@ -67,18 +54,35 @@ public class PauseGameView : MonoBehaviour
         _eventBus.Publish(new GameEvent_StartGameRequest());
     }
 
-    private void OnLoose(GameEvent_Loose e) => OnGameFinished();
-    private void OnWin(GameEvent_Win e) => OnGameFinished();
+    private void OnWin(GameEvent_GameFinished e)
+        => OnGameFinished(e);
 
-    private void OnGameFinished()
+    private void OnGameFinished(GameEvent_GameFinished e)
+    {
+        if (_animator != null)
+            _animator.ShowAnimation(OnAnimationShow);
+    }
+
+    private void OnAnimationShow()
     {
         _startButton.interactable = true;
-        if (_animator != null)
-            _animator.ShowAnimation(null);
     }
 
     private void OnDestroy()
     {
         UnsubscribeEvents();
+    }
+
+    private void SubscribeEvents()
+    {
+        if (_eventBus == null)
+            return;
+
+        _eventBus.Subscribe<GameEvent_GameFinished>(OnWin);
+    }
+
+    private void UnsubscribeEvents()
+    {
+        _eventBus.Unsubscribe<GameEvent_GameFinished>(OnWin);
     }
 }

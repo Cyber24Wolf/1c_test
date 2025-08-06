@@ -31,13 +31,15 @@ public class FigurePool : MonoMemoryPool<DO_Figure, Vector3, Vector2, CollisionL
         item.Model.Velocity     .Value = velocity;
         item.Model.ManualControl.Value = manualControl;
 
-        if (!item.TryGetComponent<GO_LightCollider>(out var collider))
-            return;
-        collider.SetCollisionLayerMask(collisionLayerMask);
+        if (item.TryGetComponent<GO_LightCollider>(out var collider))
+            collider.SetCollisionLayerMask(collisionLayerMask);
+
+        item.gameObject.SetActive(true);
     }
 
     protected override void OnDespawned(GO_Figure item)
     {
         item.Model.FigureData.Value = null;
+        item.gameObject.SetActive(false);
     }
 }

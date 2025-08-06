@@ -51,10 +51,10 @@ public class PointerDragService : IDragService
 
     private void OnInputDisabled(GameEvent_InputDisabled e)
     {
+        _inputActions.Player.PointerPosition.performed -= Drag;
+        _inputActions.Player.PointerPress.performed    -= TryStartDrag;
+        _inputActions.Player.PointerPress.canceled     -= StopDrag;
         _inputActions = null;
-        e.InputActions.Player.PointerPosition.performed -= Drag;
-        e.InputActions.Player.PointerPress.performed    -= TryStartDrag;
-        e.InputActions.Player.PointerPress.canceled     -= StopDrag;
         StopDrag();
     }
 

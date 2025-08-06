@@ -41,7 +41,7 @@ public class FiguresCounter : IFiguresCounter, IDisposable
         _aliveFiguresCount = Mathf.Max(0, _aliveFiguresCount - 1);
         PublishStateChanged();
 
-        if (_initialFiguresCount == _destroyedFiguresCount)
+        if (_destroyedFiguresCount == _initialFiguresCount && _destroyedFiguresCount != 0 && _aliveFiguresCount == 0)
             _eventBus.Publish(new GameEvent_NoFiguresLeft());
     }
 
@@ -59,6 +59,6 @@ public class FiguresCounter : IFiguresCounter, IDisposable
         _eventBus.Publish(new GameEvent_OnFiguresCounterChanged(
             _aliveFiguresCount,
             _destroyedFiguresCount,
-            _leftToSpawnFiguresCount));     
+            _leftToSpawnFiguresCount));
     }
 }

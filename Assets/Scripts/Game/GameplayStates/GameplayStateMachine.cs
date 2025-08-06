@@ -23,4 +23,7 @@ public class GameplayStateMachine
     {
         return _states[typeof(TState)] as TState;
     }
+
+    public IGameplayState GetCurrentState()
+        => _currentState;
 }
