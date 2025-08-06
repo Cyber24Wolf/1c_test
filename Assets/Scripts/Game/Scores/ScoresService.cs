@@ -2,6 +2,7 @@
 
 public interface IScoresService 
 {
+    int GetCurrent();
 }
 
 public class ScoresService : IScoresService, IDisposable
@@ -22,6 +23,11 @@ public class ScoresService : IScoresService, IDisposable
     {
         _eventBus.Unsubscribe<GameEvent_SetScoresRequest>(OnSetScoresRequest);
         _eventBus.Unsubscribe<GameEvent_AddScoresRequest>(OnAddScoresRequest);
+    }
+
+    public int GetCurrent()
+    {
+        return _scoresValue;
     }
 
     private void OnSetScoresRequest(GameEvent_SetScoresRequest e)

@@ -7,10 +7,10 @@ public interface IGame
 public class Game : IGame, IDisposable
 {
     private readonly GameplayStateMachine _stateMachine;
-    private readonly EventBus _eventBus;
-    private readonly ILifeService _lifeService;
+    private readonly EventBus             _eventBus;
+    private readonly ILifeService         _lifeService;
 
-    public Game(EventBus eventBus, IGameplayConfig gameplayConfig, ILifeService lifeService)
+    public Game(EventBus eventBus, IGameplayConfig gameplayConfig, ILifeService lifeService, IScoresService scoresService)
     {
         _eventBus    = eventBus;
         _lifeService = lifeService;
@@ -18,8 +18,8 @@ public class Game : IGame, IDisposable
         _stateMachine = new GameplayStateMachine();
         _stateMachine.Register(new GameplayState_Idle());
         _stateMachine.Register(new GameplayState_Playing(_eventBus, gameplayConfig));
-        _stateMachine.Register(new GameplayState_Win(_eventBus));
-        _stateMachine.Register(new GameplayState_Loose(_eventBus));
+        _stateMachine.Register(new GameplayState_Win(_eventBus, scoresService));
+        _stateMachine.Register(new GameplayState_Loose(_eventBus, scoresService));
 
         _eventBus.Subscribe<GameEvent_OnDeath>(OnDeath);
         _eventBus.Subscribe<GameEvent_StartGameRequest>(OnGameStartEvent);

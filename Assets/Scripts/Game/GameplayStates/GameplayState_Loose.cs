@@ -2,7 +2,7 @@
 {
     public override bool IsWin => false;
 
-    public GameplayState_Loose(EventBus eventBus) : base(eventBus)
+    public GameplayState_Loose(EventBus eventBus, IScoresService scores) : base(eventBus, scores)
     {
     }
 }
