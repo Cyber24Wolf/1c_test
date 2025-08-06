@@ -16,7 +16,7 @@ MonoBehaviour:
   lifesPerMissedFigure: 1
   lifesPerWrongFigure: 1
   scoresPerFigure: 1
-  figuresCount: 70
+  figuresCount: 100
   figureTypes:
   - {fileID: 11400000, guid: 69e6cfecca6bd9e4d8dece002c4ecd85, type: 2}
   - {fileID: 11400000, guid: f46c2a5c58df73743ac26e6e53f5f8ef, type: 2}
